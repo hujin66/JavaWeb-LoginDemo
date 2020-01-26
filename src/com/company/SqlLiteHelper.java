@@ -6,7 +6,7 @@ public class SqlLiteHelper {
 
     static Connection con;
     static Statement stat;
-    static String db = "c:/Users/foyou/IdeaProjects/JavaWeb01/db/user.db";
+    static String db = "db/user.db";
 
     //todo 可以使用配置文件
     static {

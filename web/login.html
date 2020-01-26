@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <style type="text/css">
+        @import "styles/style.css";
+    </style>
 </head>
 <body>
-<a href="register.html"></a>
+<div>
+    <img src="imgs/github.jpg">
+    <form action="/ServletRegister" method="post">
+        <input type="text" name="user" placeholder="用户名"><br>
+        <span id="userTips"></span>
+        <input type="password" name="password" placeholder="请输入密码"><br>
+        <span id="passwordTips"></span>
+        <input id="submit" type="submit" value="登录"/>
+    </form>
+    <br/><a href="register.html">没有账号？前往注册</a>
+</div>
 </body>
 </html>

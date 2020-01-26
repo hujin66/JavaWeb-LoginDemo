@@ -89,4 +89,22 @@ public class SqlLiteHelper {
         }
     }
 
+    public static synchronized boolean select(String user) {
+        if (UserUtils.ValidChars(user)) {
+            String sql = "SELECT name FROM user WHERE name= '" +
+                    user + "'";
+            try {
+                ResultSet resultSet = stat.executeQuery(sql);
+                if (resultSet.next()) {
+                    return true;
+                }
+                return false;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
 }

@@ -6,20 +6,145 @@
     <style type="text/css">
         @import "styles/style.css";
     </style>
+    <script type="text/javascript">
+
+        let userValid = false;
+
+        function checkAll() {
+            if (userValid &&
+                ck_user_local(document.getElementById("user").value) &&
+                ck_password_local(document.getElementById("password").value) &&
+                confirmTips(document.getElementById("confirm").value)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function confirmTips(value) {
+            const password = document.getElementById("password");
+            let confirmTips = document.getElementById("confirmTips");
+            if (password.value !== value) {
+                confirmTips.innerText = "密码不匹配";
+                return false;
+            } else {
+                confirmTips.innerText = "";
+                return true;
+            }
+        }
+
+        function passwordTips() {
+            const passwordTips = document.getElementById("passwordTips");
+            passwordTips.style.color = "#fff";
+            passwordTips.innerText = "6~16个字符，区分大小写";
+        }
+
+        function ck_password_local(value) {
+            const passwordTips = document.getElementById("passwordTips");
+            if (value == null || value.length === 0) {
+                passwordTips.style.color = "#f00";
+                passwordTips.innerText = "密码不能为空";
+                return false;
+            }
+            if (value.length < 6 || value.length > 16) {
+                passwordTips.style.color = "#f00";
+                passwordTips.innerText = "密码长度 6~16个字符";
+            }
+            return true;
+        }
+
+        function userTips() {
+            const userTips = document.getElementById("userTips");
+            userTips.style.color = "#fff";
+            userTips.innerText = "6~16个字符，可使用字母、数字";
+        }
+
+        function ck_user_local(value) {
+            const userTips = document.getElementById("userTips");
+            if (value == null || value.length === 0) {
+                userTips.style.color = "#f00";
+                userTips.innerText = "用户名不能为空";
+                return false;
+            }
+            if (value.length < 6 || value.length > 16) {
+                userTips.style.color = "#f00";
+                userTips.innerText = "用户名长度 6~16个字符";
+                return false;
+            }
+
+            for (let i = 0; i < value.length; i++) {
+                const num = value.charAt(i);
+                let b = false;
+                if (num >= 0 && num <= 9) {
+                    b = true;
+                } else if (num >= 'A' && num <= 'Z') {
+                    b = true;
+                } else if (num >= 'a' && num <= 'z') {
+                    b = true;
+                }
+                if (!b) {
+                    userTips.style.color = "#f00";
+                    userTips.innerText = "只能使用 字母、数字";
+                    return false;
+                }
+            }
+
+            //查询数据库用户是否存在
+            let xmlHttp;
+            if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                //兼容旧版本浏览器
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    let result = xmlHttp.responseText;
+                    if (result === "true") {
+                        userTips.style.color = "#f00";
+                        userTips.innerText = "该用户已存在！";
+                        userValid = false;
+                    } else {
+                        userValid = true;
+                    }
+                }
+            };
+            xmlHttp.open("POST", "/ServletAjax", true);
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp.send("name=" + value);
+            return true;
+        }
+
+    </script>
 </head>
+
 <body>
 <div style="height: 460px">
+
     <img src="imgs/github.jpg">
-    <form action="/ServletRegister" method="post">
-        <input type="text" name="user" placeholder="用户名"/><br>
-        <span id="userTips">6~18个字符，可使用字母、数字、下划线，需以字母开头</span>
-        <input type="password" name="password" placeholder="请输入密码"><br>
+
+    <form action="/ServletRegister" method="post" onsubmit="return checkAll()">
+
+        <input type="text" id="user" name="user" placeholder="用户名" onblur="ck_user_local(this.value)"
+               onfocus="userTips()"/><br>
+
+        <span id="userTips">6~16个字符，可使用字母、数字</span><br/>
+
+        <input type="password" id="password" name="password" placeholder="请输入密码" onblur="ck_password_local(this.value)"
+               onfocus="passwordTips()"><br>
+
         <span id="passwordTips">6~16个字符，区分大小写</span><br/>
-        <input type="password" name="password" placeholder="确定密码"><br>
-        <span id="confirmTips"></span><br/>
+
+        <input id="confirm" type="password" placeholder="确定密码" onblur="confirmTips(this.value)"><br>
+
+        <span id="confirmTips" style="color: red"></span><br/>
+
         <input id="submit" type="submit" value="注册"/>
+
     </form>
+
     <br/><a href="login.html">已有账号</a>
+
 </div>
 </body>
 </html>

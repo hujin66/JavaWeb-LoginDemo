@@ -3,7 +3,7 @@ package com.company;
 public class UserUtils {
 
     public static boolean ValidChars(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.length() < 6 || s.length() > 16) {
             return false;
         }
         for (int i = 0; i < s.length(); i++) {

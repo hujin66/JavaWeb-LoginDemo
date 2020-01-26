@@ -8,13 +8,15 @@
     </style>
 </head>
 <body>
-<div>
+<div style="height: 460px">
     <img src="imgs/github.jpg">
     <form action="/ServletRegister" method="post">
-        <input type="text" name="user" placeholder="用户名"><br>
-        <span id="userTips"></span>
+        <input type="text" name="user" placeholder="用户名"/><br>
+        <span id="userTips">6~18个字符，可使用字母、数字、下划线，需以字母开头</span>
         <input type="password" name="password" placeholder="请输入密码"><br>
-        <span id="passwordTips"></span>
+        <span id="passwordTips">6~16个字符，区分大小写</span><br/>
+        <input type="password" name="password" placeholder="确定密码"><br>
+        <span id="confirmTips"></span><br/>
         <input id="submit" type="submit" value="注册"/>
     </form>
     <br/><a href="login.html">已有账号</a>

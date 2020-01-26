@@ -6,7 +6,7 @@ public class SqlLiteHelper {
 
     static Connection con;
     static Statement stat;
-    static String db = "db/user.db";
+    static String db = "C:\\Users\\foyou\\IdeaProjects\\JavaWeb01\\web\\db\\user.db";
 
     //todo 可以使用配置文件
     static {
@@ -19,7 +19,7 @@ public class SqlLiteHelper {
             //检查user表是否存在
             ResultSet resultSet = stat.executeQuery("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'user'");
             if (resultSet.next()) {
-                System.out.println("user表存在");
+                System.out.println("user表存在====");
             } else {
                 System.out.println("user表不存在，创建====");
                 String sql = "CREATE TABLE 'user' ('name' TEXT NOT NULL,'password' TEXT,PRIMARY KEY ('name'));";
@@ -45,7 +45,7 @@ public class SqlLiteHelper {
             if (stat.executeUpdate(sql) == 1) {
                 return true;
             } else {
-                new Throwable("奇怪===").printStackTrace();
+                new Throwable("奇怪====").printStackTrace();
                 return false;
             }
         } catch (SQLException e) {

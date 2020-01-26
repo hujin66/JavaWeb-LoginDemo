@@ -13,11 +13,17 @@ public class ServletAjax extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String user = request.getParameter("name");
-        if (SqlLiteHelper.select(user)) {
-            out.print("true");
-        } else {
-            out.print("false");
+        switch (request.getParameter("type")) {
+            case "register":
+                String user = request.getParameter("name");
+                if (SqlLiteHelper.select(user)) {
+                    out.print("true");
+                } else {
+                    out.print("false");
+                }
+                break;
+            default:
+                break;
         }
     }
 

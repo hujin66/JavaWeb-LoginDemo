@@ -2,10 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主页连接</title>
+    <title>主页</title>
+    <script type="text/javascript">
+        function load() {
+            let xmlHttp;
+            if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    if (xmlHttp.responseText === "null") {
+                        window.location.href = "login.html";
+                        return;
+                    }
+                    document.getElementById("h3").innerText = "欢迎，" + xmlHttp.responseText;
+                }
+            };
+            xmlHttp.open("post", "/ServletAjax", true);
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp.send("type=session");
+        }
+    </script>
 </head>
-<body>
-<h3><a href="others/html01_form.html">表单测试</a></h3>
-<h3><a href="register.html">注册</a></h3>
+<body onload="load()">
+<h3 id="h3"></h3>
+<a href="/ServletLogout">退出登录</a>
 </body>
 </html>

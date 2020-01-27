@@ -10,10 +10,10 @@ import java.io.IOException;
 @WebServlet(name = "ServletError",urlPatterns = {"/ServletError"})
 public class ServletError extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("login.html");
+        response.sendRedirect("index.html");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("login.html");
+        response.sendRedirect("index.html");
     }
 }

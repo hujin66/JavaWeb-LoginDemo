@@ -28,8 +28,4 @@ public class ServletRegister extends HttpServlet {
         out.println(result);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("login.html");
-    }
 }

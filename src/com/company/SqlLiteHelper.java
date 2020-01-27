@@ -6,7 +6,7 @@ public class SqlLiteHelper {
 
     static Connection con;
     static Statement stat;
-    static String db = "C:\\Users\\foyou\\IdeaProjects\\JavaWeb01\\web\\db\\user.db";
+    static String db = "c:\\Users\\foyou\\IdeaProjects\\JavaWeb01\\web\\db\\user.db";
 
     //todo 可以使用配置文件
     static {
@@ -72,13 +72,14 @@ public class SqlLiteHelper {
     }
 
     public static synchronized boolean select(UserObject user) {
-        String sql = "SELECT name FROM user WHERE name= '" +
+        String sql = "SELECT * FROM user WHERE name= '" +
                 user.getUser() +
                 "' and password = '" +
                 user.getPassword() +
                 "'";
+        ResultSet resultSet;
         try {
-            ResultSet resultSet = stat.executeQuery(sql);
+            resultSet = stat.executeQuery(sql);
             if (resultSet.next()) {
                 return true;
             }
@@ -91,7 +92,7 @@ public class SqlLiteHelper {
 
     public static synchronized boolean select(String user) {
         if (UserUtils.ValidChars(user)) {
-            String sql = "SELECT name FROM user WHERE name= '" +
+            String sql = "SELECT * FROM user WHERE name= '" +
                     user + "'";
             try {
                 ResultSet resultSet = stat.executeQuery(sql);

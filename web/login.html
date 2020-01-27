@@ -6,16 +6,40 @@
     <style type="text/css">
         @import "styles/style.css";
     </style>
+    <script type="text/javascript">
+
+        function checkAll() {
+            let xmlHttp;
+            if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    if (xmlHttp.responseText === "true") {
+                        document.getElementById("resultTips").innerText = "";
+                        document.getElementById("hello").submit();
+                    } else {
+                        document.getElementById("resultTips").innerText = "用户名或用户名错误！";
+                    }
+                }
+            };
+            xmlHttp.open("post", "/ServletAjax", true);
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp.send("type=login&user=" + document.getElementById("user").value + "&password=" + document.getElementById("password").value);
+        }
+
+    </script>
 </head>
 <body>
 <div>
     <img src="imgs/github.jpg">
-    <form action="/ServletLogin" method="post">
-        <input type="text" name="user" placeholder="用户名"><br>
-        <span id="userTips"></span>
-        <input type="password" name="password" placeholder="请输入密码"><br>
-        <span id="passwordTips"></span>
-        <input id="submit" type="submit" value="登录"/>
+    <form id="hello" action="/ServletLogin" method="post">
+        <input type="text" id="user" name="user" placeholder="用户名"><br>
+        <input type="password" id="password" name="password" placeholder="请输入密码"><br/>
+        <span id="resultTips" style="color: red"></span><br/>
+        <input id="ok" type="button" value="登录" onclick="checkAll()"/>
     </form>
     <br/><a href="register.html">没有账号？前往注册</a>
 </div>
